@@ -370,7 +370,7 @@ if st.button("Submit Full Form"):
         
         # Send data to Power Automate
         try:
-            power_automate_url = "https://prod-69.westus.logic.azure.com:443/workflows/b18fd281e82b456dbc7b4dea66ee5878/triggers/manual/paths/invoke?api-version=2016-06-01"
+            power_automate_url = "https://prod-69.westus.logic.azure.com:443/workflows/b18fd281e82b456dbc7b4dea66ee5878/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=j7KYXt6mfF97vPq1r0wnOQFkACB-jleAxA8fTyxut8M"
             response = requests.post(power_automate_url, json=form_data)
         
             if response.status_code == 200:
