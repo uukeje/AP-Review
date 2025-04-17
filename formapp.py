@@ -373,7 +373,8 @@ if st.button("Submit Full Form"):
             response = requests.post(power_automate_url, json=form_data)
         
             if response.status_code == 200:
-                st.success("✅ Form submitted and saved to Excel via Power Automate!")
+                st.success("✅ Form submitted! You are an awesome reviewer!!!!")
+                st.write("Hold on while we finalize a few things...")
         
                 # Send notification to Teams
                 try:
