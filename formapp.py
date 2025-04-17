@@ -9,7 +9,7 @@ import os
 
 DATA_FILE = "reviewer_responses.csv"
 st.title("2025 AP Peer Reviewer")
-st.write(f"\U0001F4C5 {datetime.today().strftime('%B %d, %Y')}")
+st.write(f"\U0001F4C5 {datetime.today().strftime('%Y-%m-%dT%H:%M:%S')}")
 
 st.subheader("Reviewer and Program Identifiers")
 
