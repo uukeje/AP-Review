@@ -358,7 +358,7 @@ if st.button("Submit Full Form"):
             "Program Info Complete": program_info_complete,
             "Yearly Assessment Complete": yearly_assessment_complete,
             "Missing Items": ", ".join(missing_items) if missing_items else "None",
-            "Timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            "Timestamp": datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
         }
 
         # Merge curriculum responses and everything collected dynamically
