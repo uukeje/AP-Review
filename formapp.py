@@ -365,11 +365,14 @@ if st.button("Submit Full Form"):
         form_data.update(curriculum_map_responses)
         form_data.update(additional_responses)
 
-        # Convert to DataFrame
-        df = pd.DataFrame([form_data])
+        # Send data to Power Automate
+        try:
+            power_automate_url = "https://prod-69.westus.logic.azure.com:443/workflows/b18fd281e82b456dbc7b4dea66ee5878/triggers/manual/paths/invoke?api-version=2016-06-01"  
+            response = requests.post(power_automate_url, json=form_data)
 
-        # Save to CSV file
-        file_exists = os.path.exists(DATA_FILE)
-        df.to_csv(DATA_FILE, mode='a', header=not file_exists, index=False)
-
-        st.success("✅ Full form submitted and saved correctly!")
+            if response.status_code == 200:
+                st.success("✅ Form submitted and saved to Excel via Power Automate!")
+            else:
+                st.error(f"⚠️ Submission failed. Couldn't submit form to Excel sheet. Status code: {response.status_code}")
+        except Exception as e:
+            st.error(f"🚨 An error occurred: {e}")
