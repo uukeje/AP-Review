@@ -386,7 +386,7 @@ if st.button("Submit Full Form"):
                     if teams_response.status_code == 200:
                         st.info("📣 Teams notification sent successfully!")
                     else:
-                        st.warning(f"⚠️ Teams webhook failed. Status code: {teams_response.status_code}")
+                        st.warning(f"⚠️ Teams webhook failed. Couldn't send Teams notification. Status code: {teams_response.status_code}")
         
                 except Exception as e:
                     st.warning(f"⚠️ Teams notification error: {e}")
