@@ -5,6 +5,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 from datetime import datetime
+import requests
 import os
 
 DATA_FILE = "reviewer_responses.csv"
@@ -365,14 +366,34 @@ if st.button("Submit Full Form"):
         form_data.update(curriculum_map_responses)
         form_data.update(additional_responses)
 
+        
         # Send data to Power Automate
         try:
-            power_automate_url = "https://prod-69.westus.logic.azure.com:443/workflows/b18fd281e82b456dbc7b4dea66ee5878/triggers/manual/paths/invoke?api-version=2016-06-01"  
+            power_automate_url = "https://prod-69.westus.logic.azure.com:443/workflows/b18fd281e82b456dbc7b4dea66ee5878/triggers/manual/paths/invoke?api-version=2016-06-01"
             response = requests.post(power_automate_url, json=form_data)
-
+        
             if response.status_code == 200:
                 st.success("✅ Form submitted and saved to Excel via Power Automate!")
+        
+                # Send notification to Teams
+                try:
+                    teams_webhook_url = "https://prod-164.westus.logic.azure.com:443/workflows/142badbf9e114e788bb0a79dcb08a79f/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=2Uae5pJ6QplrkzkBLuTjW-F0yb5TAVqHCn9qRqE8Q3k"
+                    teams_payload = {
+                        "text": f"📥 New review submitted by **{reviewer_name}** for **{program_name}** from *{college_name}*."
+                    }
+                    teams_response = requests.post(teams_webhook_url, json=teams_payload)
+        
+                    if teams_response.status_code == 200:
+                        st.info("📣 Teams notification sent successfully!")
+                    else:
+                        st.warning(f"⚠️ Teams webhook failed. Status code: {teams_response.status_code}")
+        
+                except Exception as e:
+                    st.warning(f"⚠️ Teams notification error: {e}")
+        
             else:
-                st.error(f"⚠️ Submission failed. Couldn't submit form to Excel sheet. Status code: {response.status_code}")
+                st.error(f"⚠️ Submission failed. Couldn't submit to Excel sheet. Status code: {response.status_code}")
+        
         except Exception as e:
-            st.error(f"🚨 An error occurred: {e}")
+            st.error(f"❌ An error occurred: {e}")
+
