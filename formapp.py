@@ -390,6 +390,9 @@ if st.button("Submit Full Form"):
         
                 except Exception as e:
                     st.warning(f"⚠️ Teams notification error: {e}")
+                    
+                # Only clear the form when everything above worked
+                st.experimental_rerun()
         
             else:
                 st.error(f"⚠️ Submission failed. Couldn't submit to Excel sheet. Status code: {response.status_code}")
