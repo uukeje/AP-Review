@@ -6,6 +6,7 @@ import pandas as pd
 import numpy as np
 from datetime import datetime
 import requests
+import time
 import os
 
 DATA_FILE = "reviewer_responses.csv"
