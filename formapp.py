@@ -397,7 +397,7 @@ if st.button("Submit Full Form"):
                 # ✅ Display a thank-you screen before clearing the form
                 with st.empty():
                     st.success("🎉 Thank you! Your form was successfully submitted.")
-                    st.info("🔄 Redirecting to a fresh form in 5 seconds...")
+                    st.info("🔄 Redirecting to a fresh form in 3 seconds...")
                 
                     # Wait for 3 seconds, then refresh
                     time.sleep(3)
