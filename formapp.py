@@ -376,28 +376,12 @@ if st.button("Submit Full Form"):
             if response.status_code in [200, 202]:
                 st.success("YOU ARE AN AWESOME REVIEWER!!!!🎉 ")
                 st.write("Hold on while we finalize a few things...")
-        
-                # Send notification to Teams
-                try:
-                    teams_webhook_url = "https://prod-164.westus.logic.azure.com:443/workflows/142badbf9e114e788bb0a79dcb08a79f/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=2Uae5pJ6QplrkzkBLuTjW-F0yb5TAVqHCn9qRqE8Q3k"
-                    teams_payload = {
-                        "text": f"📥 New review submitted by **{reviewer_name}** for **{program_name}** from *{college_name}*."
-                    }
-                    teams_response = requests.post(teams_webhook_url, json=teams_payload)
-        
-                    if teams_response.status_code in [200, 202]:
-                        st.success("📣 Teams notification sent successfully!")
-                        st.success("Thank you! Your form was successfully submitted✅ .")
-                        st.write("")
-                        st.write("")
-                        st.write("")
-                        st.write("")
-                        st.write(" You can refresh the page to start a new form🔄")
-                    else:
-                        st.warning(f"⚠️ Teams webhook failed. Couldn't send Teams notification. Status code: {teams_response.status_code}")
-        
-                except Exception as e:
-                    st.warning(f"⚠️ Teams notification error: {e}")
+                st.write("")
+                st.write("")     
+                st.success("Thank you! Your form was successfully submitted✅ .")
+                st.write("")
+                st.write("")
+                st.write("You can refresh the page to start a new form🔄")
 
             else:
                 st.error(f"⚠️ Submission failed. Couldn't submit to Excel sheet. Status code: {response.status_code}")
