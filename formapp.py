@@ -399,9 +399,9 @@ if st.button("Submit Full Form"):
                     st.success("🎉 Thank you! Your form was successfully submitted.")
                     st.info("🔄 Redirecting to a fresh form in 5 seconds...")
                 
-                    # Wait for 5 seconds, then refresh
-                    time.sleep(5)
-                    st.experimental_rerun()
+                    # Wait for 3 seconds, then refresh
+                    time.sleep(3)
+                    st.rerun()
 
             else:
                 st.error(f"⚠️ Submission failed. Couldn't submit to Excel sheet. Status code: {response.status_code}")
