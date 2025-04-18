@@ -374,7 +374,7 @@ if st.button("Submit Full Form"):
             response = requests.post(power_automate_url, json=form_data)
         
             if response.status_code in [200, 202]:
-                st.success("✅ Form submitted! You are an awesome reviewer!!!!")
+                st.success("YOU ARE AN AWESOME REVIEWER!!!!🎉 ")
                 st.write("Hold on while we finalize a few things...")
         
                 # Send notification to Teams
@@ -386,23 +386,18 @@ if st.button("Submit Full Form"):
                     teams_response = requests.post(teams_webhook_url, json=teams_payload)
         
                     if teams_response.status_code in [200, 202]:
-                        st.info("📣 Teams notification sent successfully!")
+                        st.success("📣 Teams notification sent successfully!")
+                        st.success("Thank you! Your form was successfully submitted✅ .")
+                        st.write("")
+                        st.write("")
+                        st.write("")
+                        st.write("")
+                        st.write(" You can refresh the page to start a new form🔄")
                     else:
                         st.warning(f"⚠️ Teams webhook failed. Couldn't send Teams notification. Status code: {teams_response.status_code}")
         
                 except Exception as e:
                     st.warning(f"⚠️ Teams notification error: {e}")
-                    
-                # Only clear the form when everything above worked
-                # ✅ Display a thank-you screen before clearing the form
-                with st.empty():
-                    st.success("🎉 Thank you! Your form was successfully submitted.")
-                    st.write("")
-                    st.write("")
-                    st.write("")
-                    st.write("")
-                    st.info(" You can refresh the page to start a new form🔄")
-
 
             else:
                 st.error(f"⚠️ Submission failed. Couldn't submit to Excel sheet. Status code: {response.status_code}")
