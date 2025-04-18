@@ -159,10 +159,12 @@ if additional_measures_pslo1 == "Yes":
             "Some of the additional measures address all of the criteria.",
             "None of the additional measures address all of the criteria."
         ], horizontal=True, key="measure_assessment_pslo1", index=None)
-    feedback_pslo1 = ""
+    
 else:
     measure_assessment_pslo1 = ""
-    feedback_pslo1 = st.text_area("Provide your feedback(e.g., what was done well, what could be improved, etc.) on PSLO1.", key="feedback_pslo1")
+    
+# Feedback should always be shown regardless of yes/no
+feedback_pslo1 = st.text_area("Provide your feedback(e.g., what was done well, what could be improved, etc.) on PSLO1.", key="feedback_pslo1")
 
 
 # -- Store additional sections for merging with main data --
@@ -196,12 +198,13 @@ if additional_measures_pslo2 == "Yes":
             "Some of the additional measures address all of the criteria.",
             "None of the additional measures address all of the criteria."
         ], horizontal=True, key="measure_assessment_pslo2", index=None)
-    feedback_pslo2 = ""
 else:
     measure_assessment_pslo2 = ""
-    st.write("")
-    st.write("Provide your feedback (e.g., what was done well, what could be improved, etc.) on PSLO2.")
-    feedback_pslo2 = st.text_area("Provide your feedback on PSLO2.", key="feedback_pslo2")
+    
+# Always show feedback
+st.write("")
+st.write("Provide your feedback (e.g., what was done well, what could be improved, etc.) on PSLO2.")
+feedback_pslo2 = st.text_area("Provide your feedback on PSLO2.", key="feedback_pslo2")
 
 # Save Methods & Measures for PSLO2 into additional_responses
 additional_responses.update(methods_measures_pslo2)
@@ -279,10 +282,11 @@ if another_pslo_pslo2 == "Yes":
                 horizontal=True,
                 index=None
             )
-        elif additional_measures == "No":
-            st.write("")
-            st.write(f"{23 + (i - 2) * 5}. Provide your feedback (e.g., what was done well, what could be improved, etc.) on PSLO{i}.")
-            st.text_area("", key=f"feedback_pslo{i}")
+
+        # Always show feedback box
+        st.write("")
+        st.write(f"{23 + (i - 2) * 5}. Provide your feedback (e.g., what was done well, what could be improved, etc.) on PSLO{i}.")
+        st.text_area("", key=f"feedback_pslo{i}")
 
         st.write("")
         more = st.radio(f"{24 + (i - 2) * 5}. Is there another PSLO to assess in the assessment plan?", ["Yes", "No"], key=f"another_pslo_mm_{i}", horizontal=True, index=None)
