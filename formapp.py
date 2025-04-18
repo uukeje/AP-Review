@@ -7,7 +7,6 @@ import numpy as np
 from datetime import datetime
 import requests
 import time
-import io
 import os
 
 DATA_FILE = "reviewer_responses.csv"
