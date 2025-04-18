@@ -7,6 +7,7 @@ import numpy as np
 from datetime import datetime
 import requests
 import time
+import io
 import os
 
 DATA_FILE = "reviewer_responses.csv"
@@ -370,6 +371,19 @@ if st.button("Submit Full Form"):
         # Merge curriculum responses and everything collected dynamically
         form_data.update(curriculum_map_responses)
         form_data.update(additional_responses)
+
+        # Save for manual Excel copy
+        latest_df = pd.DataFrame([form_data])
+        buffer = io.BytesIO()
+        latest_df.to_excel(buffer, index=False)
+        buffer.seek(0)
+        
+        st.download_button(
+            label="⬇️ Download This Submission as Excel",
+            data=buffer,
+            file_name="latest_submission.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        )
 
         
         # Send data to Power Automate
