@@ -399,8 +399,12 @@ if st.button("Submit Full Form"):
                     st.success("🎉 Thank you! Your form was successfully submitted.")
                     st.info("🔄 Redirecting to a fresh form in 3 seconds...")
                 
-                    # Wait for 3 seconds, then refresh
+                    # Wait for 3 seconds,
                     time.sleep(3)
+                    
+                    # Then clear all values before rerunning
+                    for key in st.session_state.keys():
+                        del st.session_state[key]
                     st.rerun()
 
             else:
