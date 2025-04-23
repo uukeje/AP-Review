@@ -377,6 +377,13 @@ if st.button("Submit Full Form"):
             power_automate_url = "https://prod-69.westus.logic.azure.com:443/workflows/b18fd281e82b456dbc7b4dea66ee5878/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=j7KYXt6mfF97vPq1r0wnOQFkACB-jleAxA8fTyxut8M"
             response = requests.post(power_automate_url, json=form_data)
         
+            # Send data to Power Automate and Debug output
+            
+            st.subheader("🔁 API Response Debug")
+            st.write("Status Code:", response.status_code)
+            st.write("Text Response:", response.text)
+        
+            # Check response status
             if response.status_code in [200, 202]:
                 st.success("YOU ARE AN AWESOME REVIEWER!!!!🎉 ")
                 st.write("Hold on while we finalize a few things...")
@@ -386,10 +393,13 @@ if st.button("Submit Full Form"):
                 st.write("")
                 st.write("")
                 st.write("You can refresh the page to start a new form🔄")
-
+        
             else:
-                st.error(f"⚠️ Submission failed. Couldn't submit to Excel sheet. Status code: {response.status_code}")
+                st.error(f"⚠️ Submission failed. Couldn't submit to Excel sheet.")
+                st.warning(f"Status code: {response.status_code}")
+                st.code(response.text, language='json')
         
         except Exception as e:
-            st.error(f"❌ An error occurred: {e}")
+            st.error(f"❌ An error occurred while submitting the form.")
+            st.exception(e)
 
