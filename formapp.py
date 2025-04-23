@@ -371,35 +371,33 @@ if st.button("Submit Full Form"):
         form_data.update(curriculum_map_responses)
         form_data.update(additional_responses)
 
-        
+        # Clean up empty responses before sending to PowerAutomate
+            # This gave me so many issues before i tackled it
+            # Replace None values with empty strings to avoid schema errors
+            # Basically if a reviewer submits a form with missing inputs or questions, it wont error.
+
+        cleaned_form_data = {k: (v if v is not None else "") for k, v in form_data.items()}
+
+
         # Send data to Power Automate
         try:
             power_automate_url = "https://prod-69.westus.logic.azure.com:443/workflows/b18fd281e82b456dbc7b4dea66ee5878/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=j7KYXt6mfF97vPq1r0wnOQFkACB-jleAxA8fTyxut8M"
-            response = requests.post(power_automate_url, json=form_data)
+            response = requests.post(power_automate_url, json=cleaned_form_data)
         
-            # Send data to Power Automate and Debug output
-            
-            st.subheader("🔁 API Response Debug")
-            st.write("Status Code:", response.status_code)
-            st.write("Text Response:", response.text)
-        
-            # Check response status
             if response.status_code in [200, 202]:
                 st.success("YOU ARE AN AWESOME REVIEWER!!!!🎉 ")
                 st.write("Hold on while we finalize a few things...")
-                st.write("")
-                st.write("")     
                 st.success("Thank you! Your form was successfully submitted✅ .")
-                st.write("")
-                st.write("")
                 st.write("You can refresh the page to start a new form🔄")
-        
             else:
-                st.error(f"⚠️ Submission failed. Couldn't submit to Excel sheet.")
+                st.error("⚠️ Submission failed. Couldn't submit to Excel sheet.")
+                st.write("Please report the error by emailing kgardne9@kennesaw.edu with a screenshot/copy of the texts that would follow below")
                 st.warning(f"Status code: {response.status_code}")
+                st.subheader("🔁 API Response Debug")
                 st.code(response.text, language='json')
         
         except Exception as e:
-            st.error(f"❌ An error occurred while submitting the form.")
+            st.error("❌ An error occurred while submitting the form.")
+            st.subheader("🔁 API Response Debug")
             st.exception(e)
 
